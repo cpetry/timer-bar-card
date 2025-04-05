@@ -91,6 +91,9 @@ export const timerTimeRemaining = (hass: HomeAssistant, config: TimerBarConfig, 
 
 /** Calculate what percent of the timer's duration has passed. */
 export const timerTimePercent = (hass: HomeAssistant, config: TimerBarConfig, stateObj: HassEntity | undefined, correction: number): undefined | number => {
+  const percentage = attribute(hass, stateObj, config.percentage);
+  if (percentage != undefined) return percentage * 100;
+  
   const remaining = timerTimeRemaining(hass, config, stateObj, correction);
   const duration = findDuration(hass, config, stateObj);
 
